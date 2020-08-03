@@ -16,18 +16,21 @@ class BannerSlider extends HookWidget {
 
     return Stack(
       children: [
-        CarouselSlider.builder(
-          itemCount: banners.length,
-          itemBuilder: (_, index) => bannerItem[index],
-          options: CarouselOptions(
-            height: 150.0,
-            autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 400),
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            viewportFraction: 1.0,
-            onPageChanged: (int, _) => current.value = int,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CarouselSlider.builder(
+            itemCount: banners.length,
+            itemBuilder: (_, index) => bannerItem[index],
+            options: CarouselOptions(
+              height: 150.0,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 400),
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              viewportFraction: 1.0,
+              onPageChanged: (int, _) => current.value = int,
+            ),
           ),
         ),
         Container(
@@ -51,6 +54,18 @@ class BannerSlider extends HookWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _buildBackground(BuildContext context) {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.vertical(
+            bottom:
+                Radius.elliptical(MediaQuery.of(context).size.width, 100.0)),
+      ),
     );
   }
 }
