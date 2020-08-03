@@ -50,9 +50,11 @@ class HomeMiddleware extends StatelessWidget {
             final flashSaleBloc = context.bloc<FlashSaleBloc>();
 
             state.maybeWhen(
-              initial: () => flashSaleBloc.fetch(),
-              loaded: (quickLinkGroup) =>
-                  homeBloc.quickLinkLoaded(quickLinkGroup),
+              fail: () => flashSaleBloc.fetch(),
+              loaded: (quickLinkGroup) {
+                homeBloc.quickLinkLoaded(quickLinkGroup);
+                flashSaleBloc.fetch();
+              },
               orElse: () {},
             );
           },
