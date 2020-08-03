@@ -1,14 +1,36 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tiki_test/data/models/flash_sale.dart';
 import 'package:flutter_tiki_test/dimen.dart';
+import 'package:flutter_tiki_test/home/components/loading.dart';
 import 'package:shimmer/shimmer.dart';
+
 import '../.../../../../common/extension.dart';
+import 'flash_sale_bloc.dart';
 
 class FlashSalePane extends StatelessWidget {
+  const FlashSalePane({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FlashSaleBloc, FlashSaleState>(
+      cubit: context.bloc<FlashSaleBloc>(),
+      builder: (context, state) {
+        return state.maybeWhen(
+          orElse: () => Container(),
+          loading: () => Loading(height: 160.0),
+          loaded: (flashSales) => _Pane(flashSales: flashSales),
+        );
+      },
+    );
+  }
+}
+
+class _Pane extends StatelessWidget {
   final List<FlashSale> flashSales;
 
-  const FlashSalePane({Key key, @required this.flashSales}) : super(key: key);
+  const _Pane({Key key, @required this.flashSales}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,18 +86,30 @@ class FlashSalePane extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: 160.0,
-            child: ListView.builder(
-              itemCount: flashSales.length,
-              itemBuilder: (_, index) => _Item(
-                flashSale: flashSales[index],
-              ),
-              itemExtent: 130.0,
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
+          _ListItem(flashSales: flashSales),
         ],
+      ),
+    );
+  }
+}
+
+class _ListItem extends StatelessWidget {
+  final List<FlashSale> flashSales;
+
+  const _ListItem({Key key, @required this.flashSales}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      height: 160.0,
+      child: ListView.builder(
+        itemCount: flashSales.length,
+        itemBuilder: (_, index) => _Item(
+          flashSale: flashSales[index],
+        ),
+        itemExtent: 130.0,
+        scrollDirection: Axis.horizontal,
       ),
     );
   }
@@ -186,7 +220,7 @@ class _ProgressBar extends StatelessWidget {
         if (percent > 50)
           CachedNetworkImage(
             imageUrl:
-                'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/237/fire_1f525.png',
+            'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/237/fire_1f525.png',
             fit: BoxFit.contain,
             height: 20,
             width: 20,

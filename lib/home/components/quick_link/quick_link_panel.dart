@@ -1,13 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tiki_test/data/models/quick_link.dart';
 import 'package:flutter_tiki_test/dimen.dart';
+import 'package:flutter_tiki_test/home/components/loading.dart';
+
+import 'quick_link_bloc.dart';
 
 class QuickLinkPanel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<QuickLinkBloc, QuickLinkState>(
+      cubit: context.bloc<QuickLinkBloc>(),
+      builder: (context, state) {
+        return state.maybeWhen(
+          orElse: () => Container(),
+          loading: () => Loading(height: 100.0),
+          loaded: (quickLinkGroups) => _Panel(quickLinkGroups: quickLinkGroups),
+        );
+      },
+    );
+  }
+}
+
+class _Panel extends StatelessWidget {
   final List<List<QuickLink>> quickLinkGroups;
 
-  const QuickLinkPanel({Key key, @required this.quickLinkGroups})
-      : super(key: key);
+  const _Panel({Key key, @required this.quickLinkGroups}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +51,7 @@ class _ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100.0,
       child: ListView.builder(
         padding: const EdgeInsets.only(left: Dimens.M),
