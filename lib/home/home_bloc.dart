@@ -3,7 +3,7 @@ import 'package:flutter_tiki_test/data/models/banner.dart';
 import 'package:flutter_tiki_test/data/models/flash_sale.dart';
 import 'package:flutter_tiki_test/data/models/quick_link.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
+import 'package:injectable/injectable.dart';
 
 part 'home_bloc.freezed.dart';
 
@@ -22,6 +22,7 @@ abstract class HomeState with _$HomeState {
   factory HomeState.loadedFail() = _LoadedFail;
 }
 
+@Injectable()
 class HomeBloc extends Cubit<HomeState> {
   HomeBloc() : super(HomeState.initial());
 

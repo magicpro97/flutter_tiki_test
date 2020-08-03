@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tiki_test/data/models/banner.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../data/tiki_client.dart';
 
@@ -17,6 +18,7 @@ abstract class BannerState with _$BannerState {
   factory BannerState.fail() = _Fail;
 }
 
+@Injectable()
 class BannerBloc extends Cubit<BannerState> {
   final TikiClient _tikiClient;
 

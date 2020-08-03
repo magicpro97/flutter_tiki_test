@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tiki_test/data/models/flash_sale.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../data/tiki_client.dart';
 
@@ -17,6 +18,7 @@ abstract class FlashSaleState with _$FlashSaleState {
   factory FlashSaleState.fail() = _Fail;
 }
 
+@Injectable()
 class FlashSaleBloc extends Cubit<FlashSaleState> {
   final TikiClient _tikiClient;
 

@@ -1,15 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tiki_test/data/tiki_client.dart';
 import 'package:flutter_tiki_test/home/home_bloc.dart';
 import 'package:flutter_tiki_test/home/home_page.dart';
-import 'package:flutter_tiki_test/data/tiki_client.dart';
 
+import 'dependency_injector.dart';
 import 'home/components/banner/banner_bloc.dart';
 import 'home/components/flash_sale/flash_sale_bloc.dart';
 import 'home/components/quick_link/quick_link_bloc.dart';
 
 void main() {
+  configureDependencies();
   runApp(MyApp());
 }
 
@@ -23,31 +24,20 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: RepositoryProvider(
-        create: (_) => TikiClient(Dio()
-          ..interceptors.add(LogInterceptor(
-            responseBody: true,
-            requestBody: true,
-            request: true,
-          ))),
+        create: (_) => getIt.get<TikiClient>(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => HomeBloc(),
+              create: (context) => getIt.get<HomeBloc>(),
             ),
             BlocProvider(
-              create: (context) => BannerBloc(
-                context.repository<TikiClient>(),
-              ),
+              create: (context) => getIt.get<BannerBloc>(),
             ),
             BlocProvider(
-              create: (context) => QuickLinkBloc(
-                context.repository<TikiClient>(),
-              ),
+              create: (context) => getIt.get<QuickLinkBloc>(),
             ),
             BlocProvider(
-              create: (context) => FlashSaleBloc(
-                context.repository<TikiClient>(),
-              ),
+              create: (context) => getIt.get<FlashSaleBloc>(),
             ),
           ],
           child: HomePage(),

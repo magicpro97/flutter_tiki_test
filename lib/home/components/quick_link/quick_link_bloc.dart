@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tiki_test/data/models/quick_link.dart';
 import 'package:flutter_tiki_test/data/tiki_client.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'quick_link_bloc.freezed.dart';
 
@@ -16,6 +17,7 @@ abstract class QuickLinkState with _$QuickLinkState {
   factory QuickLinkState.fail() = _Fail;
 }
 
+@Injectable()
 class QuickLinkBloc extends Cubit<QuickLinkState> {
   final TikiClient _tikiClient;
 
