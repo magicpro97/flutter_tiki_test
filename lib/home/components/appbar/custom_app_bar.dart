@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tiki_test/dimen.dart';
 
@@ -20,8 +18,6 @@ class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
     final spacerWidth = shrinkOffset > 0 ? Dimens.XXL2 : 0.0;
     final heightScale = Dimens.XXL * (1 / offset);
     final spacerHeight = heightScale > Dimens.L ? heightScale : Dimens.L;
-
-    log(shrinkOffset.toString());
 
     return Stack(
       children: <Widget>[
