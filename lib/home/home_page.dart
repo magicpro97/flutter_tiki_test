@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_tiki_test/common/hooks/refresh_controller.dart';
-import 'package:flutter_tiki_test/dimen.dart';
 import 'package:flutter_tiki_test/home/components/appbar/custom_app_bar.dart';
 import 'package:flutter_tiki_test/home/components/flash_sale/flash_sale_bloc.dart';
 import 'package:flutter_tiki_test/home/components/flash_sale/flash_sale_pane.dart';
@@ -64,11 +63,6 @@ class HomePage extends HookWidget {
                         );
                       },
                     ),
-                    Divider(
-                      height: Dimens.M,
-                      color: Colors.grey[400],
-                      thickness: Dimens.M,
-                    ),
                     BlocBuilder<FlashSaleBloc, FlashSaleState>(
                       cubit: context.bloc<FlashSaleBloc>(),
                       builder: (context, state) {
@@ -81,27 +75,12 @@ class HomePage extends HookWidget {
                         );
                       },
                     ),
-                    Placeholder(
-                      fallbackHeight: 200,
-                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildBackground(BuildContext context) {
-    return Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.vertical(
-            bottom:
-                Radius.elliptical(MediaQuery.of(context).size.width, 100.0)),
       ),
     );
   }

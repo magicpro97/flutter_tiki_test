@@ -13,7 +13,14 @@ class QuickLinkPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: quickLinkGroups.map((e) => _ListItem(quickLinks: e)).toList(),
+      children: [
+        ...quickLinkGroups.map((e) => _ListItem(quickLinks: e)).toList(),
+        Divider(
+          height: Dimens.M,
+          color: Colors.grey[400],
+          thickness: Dimens.M,
+        )
+      ],
     );
   }
 }

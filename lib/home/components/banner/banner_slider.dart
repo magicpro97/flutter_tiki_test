@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide Banner;
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_tiki_test/data/models/banner.dart';
+import 'package:flutter_tiki_test/dimen.dart';
 
 class BannerSlider extends HookWidget {
   final List<Banner> banners;
@@ -16,8 +17,9 @@ class BannerSlider extends HookWidget {
 
     return Stack(
       children: [
+        _buildBackground(context),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.fromLTRB(Dimens.M, 0, Dimens.M, Dimens.M),
           child: CarouselSlider.builder(
             itemCount: banners.length,
             itemBuilder: (_, index) => bannerItem[index],
@@ -59,7 +61,7 @@ class BannerSlider extends HookWidget {
 
   Widget _buildBackground(BuildContext context) {
     return Container(
-      height: 200,
+      height: 100,
       decoration: BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.vertical(
